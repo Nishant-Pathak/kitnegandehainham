@@ -21,6 +21,17 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+  google.maps.event.addListener(map, 'dblclick', function(e) {
+    placeMarker(e.latLng, map);
+  });
+}
+
+function placeMarker(position, map) {
+  var marker = new google.maps.Marker({
+    position: position,
+    map: map
+  });
+  //map.panTo(position);
 }
 
 function handleNoGeolocation(errorFlag) {
