@@ -15,8 +15,7 @@ function initialize() {
 
       var infowindow = new google.maps.InfoWindow({
         map: map,
-        position: pos,
-        content: 'Location found using HTML5.'
+        position: pos
       });
 
       map.setCenter(pos);
@@ -30,19 +29,12 @@ function initialize() {
 }
 
 function handleNoGeolocation(errorFlag) {
-  if (errorFlag) {
-    var content = 'Error: The Geolocation service failed.';
-  } else {
-    var content = 'Error: Your browser doesn\'t support geolocation.';
-  }
 
   var options = {
     map: map,
-    position: new google.maps.LatLng(21.1289956, 82.7792201),
-    content: content
+    position: new google.maps.LatLng(21.1289956, 82.7792201)
   };
 
-  var infowindow = new google.maps.InfoWindow(options);
   map.setCenter(options.position);
 }
 
