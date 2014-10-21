@@ -1,8 +1,8 @@
 var map;
-
+var emsg = "Something went wrong";
 function initialize() {
   var mapOptions = {
-    zoom: 5
+    zoom: 13
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -21,15 +21,46 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
-  google.maps.event.addListener(map, 'dblclick', function(e) {
+  google.maps.event.addListener(map, 'rightclick', function(e) {
     placeMarker(e.latLng, map);
   });
+  plotExistingMarkers();
 }
 
+function plotExistingMarkers() {
+    $.post("nitro/nitro.php?action=getMarker").done(function(data) {
+    if(data.errorcode != 0 || data.message != "Done") {
+       bootbox.alert(emsg);
+       return;
+    }
+ //   console.log(data);
+    for(var i = 0; i< data.markers.length; i++) {
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(data.markers[i].Lat, data.markers[i].Lng),
+        map: map
+      });
+    }
+    });
+}
+//new google.maps.LatLng(21.1289956, 82.7792201)
+
 function placeMarker(position, map) {
-  var marker = new google.maps.Marker({
-    position: position,
-    map: map
+  bootbox.confirm("Do you want to declare this place dirty?", function(result) {
+  if(result === true) {
+    var postdata = {};
+    postdata.Lat = position.k;
+    postdata.Lng = position.B;
+    $.post("nitro/nitro.php?action=saveMarker", postdata).done(function(data) {
+    if(data.errorcode != 0 || data.message != "Done") {
+       bootbox.alert(emsg);
+       return;
+    }
+    var marker = new google.maps.Marker({
+      position: position,
+      map: map
+    });
+    });
+  }
   });
   //map.panTo(position);
 }
