@@ -48,7 +48,26 @@ class nitro{
       include_once("../includes/dbclose.php");
    }
 
+   private function verifyReCaptha() {
+      require_once('../includes/recaptchalib.php');
+      $privatekey = "6LeRZvwSAAAAALNr-n6o2-4h6_dYJihT86EjgpnA";
+      $resp = recaptcha_check_answer ($privatekey,
+                          $_SERVER["REMOTE_ADDR"],
+                          $_POST["recaptcha_challenge_field"],
+                          $_POST["recaptcha_response_field"]);
+
+      if (!$resp->is_valid) {
+        $this->response->set_message("The reCAPTCHA wasn't entered correctly. Go back and try it again. Error". $resp->error);
+        $this->response->set_errorcode(-1);
+        return false;
+      }
+      return true;
+   }
+
    private function saveMarker() {
+      if(!$this->verifyReCaptha()) {
+        return;
+      }
       include_once("../includes/dbinit.php");
       $Lat = mysqli_real_escape_string($conn, $_POST["Lat"]);
       $Lng = mysqli_real_escape_string($conn, $_POST["Lng"]);

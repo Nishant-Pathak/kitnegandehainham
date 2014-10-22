@@ -2,7 +2,7 @@ var map;
 var emsg = "Something went wrong";
 function initialize() {
   var mapOptions = {
-    zoom: 13
+    zoom: 17
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -22,6 +22,9 @@ function initialize() {
     handleNoGeolocation(false);
   }
   google.maps.event.addListener(map, 'rightclick', function(e) {
+    placeMarker(e.latLng, map);
+  });
+    google.maps.event.addListener(map, 'dblclick', function(e) {
     placeMarker(e.latLng, map);
   });
   plotExistingMarkers();
@@ -45,24 +48,69 @@ function plotExistingMarkers() {
 //new google.maps.LatLng(21.1289956, 82.7792201)
 
 function placeMarker(position, map) {
-  bootbox.confirm("Do you want to declare this place dirty?", function(result) {
-  if(result === true) {
-    var postdata = {};
-    postdata.Lat = position.k;
-    postdata.Lng = position.B;
-    $.post("nitro/nitro.php?action=saveMarker", postdata).done(function(data) {
-    if(data.errorcode != 0 || data.message != "Done") {
-       bootbox.alert(emsg);
-       return;
+  Recaptcha.create("6LeRZvwSAAAAAGjP7P9C-FAsrA9TQz3FnjRcqYE1",
+    "recaptcha_div",
+    {
+      theme: "red",
+      callback: Recaptcha.focus_response_field
     }
-    var marker = new google.maps.Marker({
-      position: position,
-      map: map
-    });
-    });
-  }
-  });
-  //map.panTo(position);
+  );
+var formDiv = '<div class="row">  ' +
+              '<div class="col-md-12"> ' +
+              '<form class="form-horizontal" id="markerForm" action="nitro/nitro.php?action=saveMarker" method="POST"> ' +
+              '<div class="form-inline">' +
+              '<label class="col-sm-4">Location Cordinates</label>' +
+              '<div class="form-group">' +
+              '<input type="text" class="form-control" id="Lat" value='+position.k+' readonly>' +
+              '</div>' +
+              '<div class="form-group">' +
+              '<input type="text" class="form-control" id="Lng" value='+position.B+' readonly>' +
+              '</div>' +
+              '</div>' +
+              '<div id="recaptcha_div"></div>' +
+              '</form>' +
+              '</div>' +
+              '</div>' +
+
+              '<script>' +
+              '$("#markerForm").submit(function(e) { ' +
+                  'var postData = {};/* $(this).serializeArray(); */'+
+                  'postData.Lat =  $("#Lat").val();' +
+                  'postData.Lng =  $("#Lng").val();' +
+                  'postData.recaptcha_challenge_field = $("#recaptcha_challenge_field").val();' +
+                  'postData.recaptcha_response_field = $("#recaptcha_response_field").val();' +
+                  '$.post('+
+                    '"nitro/nitro.php?action=saveMarker",'+
+                    'postData).done(function(data) {'+
+                       'if(data.errorcode != 0 || data.message != "Done") {'+
+                       'bootbox.dialog({message:data.message,'+
+                          'title:"Server Error",'+
+                          'buttons:{danger: { label: "Re-try",className: "btn-danger", callback: function() {'+
+                       '}}}}); '+
+                       '} else {'+
+                          'var marker = new google.maps.Marker({ '+
+                          'position: new google.maps.LatLng(postData.Lat, postData.Lng), '+
+                          'map: map }); '+
+                    '} });    '+
+              'e.preventDefault();'+
+              '});</script>' +
+              '</div>' +
+              '</div>';
+  bootbox.dialog({
+     title: "Do you want to declare this place dirty ?",
+     message: formDiv,
+              
+     buttons: {
+       success : {
+         label: "Save",
+         className: "btn-success",
+         callback: function (data) {
+            $("#markerForm").submit();
+
+         }
+       }
+    }});
+  //map.panTo(position);*/
 }
 
 function handleNoGeolocation(errorFlag) {

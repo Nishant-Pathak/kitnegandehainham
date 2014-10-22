@@ -8,11 +8,8 @@ include_once("includes/navbar.php");
         <div class="page-header">
           <h1>Let's find how dirty we are...</h1>
         </div>
+        <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
         <div id="map-canvas"></div>
-        <!--
-        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the <code>.container</code>.</p>
-        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-        -->
       </div>
     </div>
 
