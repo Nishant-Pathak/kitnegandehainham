@@ -41,6 +41,7 @@ class nitro{
       while ($row = $result->fetch_assoc()) {
          $result2[$i]["Lat"] = $row["Lat"];
          $result2[$i]["Lng"] = $row["Lng"];
+         $result2[$i]["Severe"] = $row["Severe"];
          $i++;
       }
     //  print $result2;

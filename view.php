@@ -8,7 +8,6 @@ include_once("includes/navbar.php");
         <div class="page-header">
           <h1>Current Status</h1>
         </div>
-        <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
         <div id="map-canvas"></div>
       </div>
     </div>
