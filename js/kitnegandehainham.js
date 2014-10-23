@@ -32,18 +32,23 @@ function initialize() {
 
 function plotExistingMarkers() {
     $.post("nitro/nitro.php?action=getMarker").done(function(data) {
-    if(data.errorcode != 0 || data.message != "Done") {
+    data = jQuery.parseJSON(data);
+    if((data.errorcode != 0) || (data.message != "Done")) {
+       console.log(typeof data);
        bootbox.alert(emsg);
        return;
     }
- //   console.log(data);
+    if(data.markers == null) {
+        console.log("Nothing to show");
+        return;
+    }
     for(var i = 0; i< data.markers.length; i++) {
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(data.markers[i].Lat, data.markers[i].Lng),
         map: map
       });
     }
-    });
+   } ,"json");
 }
 //new google.maps.LatLng(21.1289956, 82.7792201)
 
