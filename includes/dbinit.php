@@ -2,7 +2,7 @@
 // Define connection variables
 $DBServer = "localhost";  // server name or IP address
 $DBUser = "root";
-$DBPass = "freebsd";
+$DBPass = "";
 $DBName = "markerlocations";
 
 // Create connection
