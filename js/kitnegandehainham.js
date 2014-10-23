@@ -70,7 +70,7 @@ var formDiv = '<form class="form-horizontal" id="markerForm" action="nitro/nitro
                 '</div>' +
               '</div>' +
               '<div class="form-group form-inline">' +
-              '<label class="col-sm-3">Least</label>' +
+              '<label class="col-sm-3">Less</label>' +
                 '<label class="radio-inline">' +
                     '<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1> 1'+
                 '</label>' +

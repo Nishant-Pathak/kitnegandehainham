@@ -9,8 +9,9 @@ include_once("includes/navbar.php");
           <h3>In spite of all the cleaning event going on, let's find how dirty we are at this stage.</h3>
         </div>
         <ul class="lead">Usage:
-        <li>Go to Home Page.</li>
-        <li>Press right click or double click on the map to select a location.</li>
+        <li>Go to Home Page of kitnegandehainham.</li>
+        <li>Press right / double click on the map to select a location.</li>
+        <li>Rate the place on the scale of 5, for 1 as less dirty place and 5 as most.</li>
         <li>Save the location.</li>
         </ul>
       </div>
