@@ -19,9 +19,14 @@ function initialize() {
 
 function plotExistingMarkers() {
     $.post("nitro/nitro.php?action=getMarker").done(function(data) {
+    data = jQuery.parseJSON(data);
     if(data.errorcode != 0 || data.message != "Done") {
        bootbox.alert(emsg);
        return;
+    }
+    if(data.markers == null) {
+        console.log("Nothing to show");
+        return;
     }
     for(var i = 0; i< data.markers.length; i++) {
       var marker = new google.maps.Marker({
@@ -29,7 +34,7 @@ function plotExistingMarkers() {
         map: map
       });
     }
-    });
+    }, "json");
 }
 
 function handleNoGeolocation(errorFlag) {

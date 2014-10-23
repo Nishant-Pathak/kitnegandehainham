@@ -34,7 +34,6 @@ function plotExistingMarkers() {
     $.post("nitro/nitro.php?action=getMarker").done(function(data) {
     data = jQuery.parseJSON(data);
     if((data.errorcode != 0) || (data.message != "Done")) {
-       console.log(typeof data);
        bootbox.alert(emsg);
        return;
     }
