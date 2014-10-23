@@ -71,6 +71,7 @@ class nitro{
       include_once("../includes/dbinit.php");
       $Lat = mysqli_real_escape_string($conn, $_POST["Lat"]);
       $Lng = mysqli_real_escape_string($conn, $_POST["Lng"]);
+      $Severe = mysqli_real_escape_string($conn, $_POST["Severe"]);
       $query = "SELECT * FROM marker_tbl WHERE Lat=".$Lat." AND Lng=".$Lng;
       $result = mysqli_query($conn, $query);
       if($result->num_rows != 0) {
@@ -79,7 +80,7 @@ class nitro{
           $this->response->set_errorcode(-1);
           return;
       }
-      $insert_q = "INSERT INTO marker_tbl (Lat, Lng) VALUES(".$Lat.", ".$Lng.")";
+      $insert_q = "INSERT INTO marker_tbl (Lat, Lng, Severe) VALUES(".$Lat.", ".$Lng.", ".$Severe.")";
       $result = mysqli_query($conn, $insert_q);
       include_once("../includes/dbclose.php");
    }

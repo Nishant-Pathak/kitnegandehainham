@@ -60,26 +60,42 @@ function placeMarker(position, map) {
       callback: Recaptcha.focus_response_field
     }
   );
-var formDiv = '<div class="row">  ' +
-              '<div class="col-md-12"> ' +
-              '<form class="form-horizontal" id="markerForm" action="nitro/nitro.php?action=saveMarker" method="POST"> ' +
-              '<div class="form-inline">' +
-              '<label class="col-sm-4">Location Cordinates</label>' +
-              '<div class="form-group">' +
-              '<input type="text" class="form-control" id="Lat" value='+position.k+' readonly>' +
+var formDiv = '<form class="form-horizontal" id="markerForm" action="nitro/nitro.php?action=saveMarker" method="POST"> ' +
+              '<div class="form-group form-inline">' +
+                '<label class="col-sm-4">Location Cordinates</label>' +
+                '<div class="form-group col-sm-4">' +
+                    '<input type="text" class="form-control" id="Lat" value='+position.k+' readonly>' +
+                '</div>' +
+                '<div class="form-group col-sm-4">' +
+                    '<input type="text" class="form-control" id="Lng" value='+position.B+' readonly>' +
+                '</div>' +
               '</div>' +
-              '<div class="form-group">' +
-              '<input type="text" class="form-control" id="Lng" value='+position.B+' readonly>' +
-              '</div>' +
+              '<div class="form-group form-inline">' +
+              '<label class="col-sm-3">Least</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1> 1'+
+                '</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value=2 checked> 2'+
+                '</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value=3> 3'+
+                '</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio4" value=4> 4'+
+                '</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio5" value=5> 5'+
+                '</label>' +
+                '<label class="col-sm-3 pull-right">Most</label>' +
               '</div>' +
               '<div id="recaptcha_div"></div>' +
               '</form>' +
-              '</div>' +
-              '</div>' +
 
               '<script>' +
               '$("#markerForm").submit(function(e) { ' +
-                  'var postData = {};/* $(this).serializeArray(); */'+
+                  'var postData = {};'+
+                  'postData.Severe = $("input[name=inlineRadioOptions]:checked").val();' +
                   'postData.Lat =  $("#Lat").val();' +
                   'postData.Lng =  $("#Lng").val();' +
                   'postData.recaptcha_challenge_field = $("#recaptcha_challenge_field").val();' +
