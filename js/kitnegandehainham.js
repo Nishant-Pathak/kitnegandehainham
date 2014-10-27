@@ -55,7 +55,7 @@ function placeMarker(position, map) {
   Recaptcha.create("6LeRZvwSAAAAAGjP7P9C-FAsrA9TQz3FnjRcqYE1",
     "recaptcha_div",
     {
-      theme: "red",
+      theme: "white",
       callback: Recaptcha.focus_response_field
     }
   );

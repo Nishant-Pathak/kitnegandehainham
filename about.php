@@ -10,7 +10,8 @@ include_once("includes/navbar.php");
         </div>
         <ul class="lead">Usage:
         <li>Go to Home Page of kitnegandehainham.</li>
-        <li>Press right / double click on the map to select a location.</li>
+        <li>Press right or double click on the map to select a location.</li>
+        <li>Take a picture of the scene.</li>
         <li>Rate the place on the scale of 5, for 1 as less dirty place and 5 as most.</li>
         <li>Save the location.</li>
         </ul>
