@@ -1,10 +1,12 @@
 var map;
+var geocoder;
 var markers = [];
 var markercount = 0;
 var circles = [];
 var switching = true;
 var emsg = "Something went wrong: ";
 function initialize() {
+    geocoder = new google.maps.Geocoder();
     var mapOptions = {
         zoom: 4
     };
@@ -88,13 +90,20 @@ function plotExistingMarkers() {
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map);
             var p = this.getPosition();
-            infowindow.setPosition(p);
             $.ajax({
                 url:         "nitro/nitro.php?action=getImage&Lat="+p.k+"&Lng="+p.B,
                 type:        "POST",
                 success:     function(data) {
                     if(typeof data == "string") data = jQuery.parseJSON(data);
-                    infowindow.setContent(bootbox.alert(data.imgdiv));
+                    var str = bootbox.alert(data.imgdiv).toString();
+                    infowindow.setContent(str);
+                    geocoder.geocode({'latLng': p}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[1]) {
+                                $('#cord').text(results[1].formatted_address);
+                            }
+                        }
+                    });
                 }
             });
         });

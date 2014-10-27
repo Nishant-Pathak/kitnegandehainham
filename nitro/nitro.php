@@ -28,6 +28,7 @@ class nitro{
          break;
          case "getImage":
             $this->getImage();
+         break;
          default:
          break;
       }
@@ -45,9 +46,12 @@ class nitro{
       }
       $row = $result->fetch_assoc();
 
-      $img = "../uploads/".$row["mid"];
-
-      $imgdiv = '<div class="modal-body"><img style="max-width:100%" src= '.$img.'></img></div>';
+      $img    = "../uploads/".$row["mid"];
+      $cord   = "(".$Lat.",".$Lng.")";
+      $imgdiv = '<div class="modal-body">'.
+                '<pre id="cord">'.$cord.'</pre>'.
+                '<img style="max-width:100%" src= '.$img.'></img>'.
+                '<pre>Severity:'.$row["Severe"].'</pre></div>';
       $this->response->add_response("imgdiv", $imgdiv);
    }
    
