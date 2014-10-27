@@ -23,7 +23,7 @@ function setAllMap(map) {
     setTimeout(function() {
         if(map != null) markers[markercount].setAnimation(google.maps.Animation.DROP);
         markers[markercount++].setMap(map);
-    }, i*200);
+    }, i*100);
   }
 }
 
@@ -34,9 +34,7 @@ function setAllCircleMap(map) {
 }
 
 function ReplaceMarker() {
-    // zoom changes between 3 --- 21 , radius changes between 10000
     if(map.getZoom() < 3) map.setZoom(4);
-    console.log(map.getZoom());
     if(map.getZoom() > 8 && switching == true) {
         setAllCircleMap(null);
         setAllMap(map);
@@ -50,7 +48,7 @@ function ReplaceMarker() {
 }
 
 function plotExistingMarkers() {
-    $.post("nitro/nitro.php?action=getMarker").done(function(data) {
+    $.post("nitro/nitro.php?action=getMarkers").done(function(data) {
     if(typeof data == "string") data = jQuery.parseJSON(data);
     if(data.errorcode != 0 || data.message != "Done") {
        bootbox.alert(emsg + data.message);
@@ -80,16 +78,33 @@ function plotExistingMarkers() {
             map: map
         }); 
         */
-        markers.push(new google.maps.Marker({
+        var marker = new google.maps.Marker({
             position: pos,
             map: null,
             draggable: false,
             animation: google.maps.Animation.DROP
-        }));
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map);
+            var p = this.getPosition();
+            infowindow.setPosition(p);
+            $.ajax({
+                url:         "nitro/nitro.php?action=getImage&Lat="+p.k+"&Lng="+p.B,
+                type:        "POST",
+                success:     function(data) {
+                    if(typeof data == "string") data = jQuery.parseJSON(data);
+                    infowindow.setContent(bootbox.alert(data.imgdiv));
+                }
+            });
+        });
     }
-    });
+});
 }
 
+var infowindow = new google.maps.InfoWindow({
+      content: ""
+});
 function handleNoGeolocation(errorFlag) {
 
   var options = {

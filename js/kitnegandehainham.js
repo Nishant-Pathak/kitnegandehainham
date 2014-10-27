@@ -32,7 +32,7 @@ function initialize() {
 
 function plotExistingMarkers() {
     $.post("nitro/nitro.php?action=getMarker").done(function(data) {
-    data = jQuery.parseJSON(data);
+    if(typeof data == "string") data = jQuery.parseJSON(data);
     if((data.errorcode != 0) || (data.message != "Done")) {
        bootbox.alert(emsg);
        return;
@@ -59,63 +59,41 @@ function placeMarker(position, map) {
       callback: Recaptcha.focus_response_field
     }
   );
-var formDiv = '<form class="form-horizontal" id="markerForm" action="nitro/nitro.php?action=saveMarker" method="POST"> ' +
+var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/form-data" method="POST"> ' +
               '<div class="form-group form-inline">' +
                 '<label class="col-sm-4">Location Cordinates</label>' +
                 '<div class="form-group col-sm-4">' +
-                    '<input type="text" class="form-control" id="Lat" value='+position.k+' readonly>' +
+                    '<input type="text" class="form-control" name="Lat" id="Lat" value='+position.k+' readonly>' +
                 '</div>' +
                 '<div class="form-group col-sm-4">' +
-                    '<input type="text" class="form-control" id="Lng" value='+position.B+' readonly>' +
+                    '<input type="text" class="form-control" name="Lng" id="Lng" value='+position.B+' readonly>' +
                 '</div>' +
               '</div>' +
               '<div class="form-group form-inline">' +
               '<label class="col-sm-3">Less</label>' +
                 '<label class="radio-inline">' +
-                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1> 1'+
+                    '<input type="radio" name="Severe" id="inlineRadio1" value=1> 1'+
                 '</label>' +
                 '<label class="radio-inline">' +
-                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value=2 checked> 2'+
+                    '<input type="radio" name="Severe" id="inlineRadio2" value=2 checked> 2'+
                 '</label>' +
                 '<label class="radio-inline">' +
-                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value=3> 3'+
+                    '<input type="radio" name="Severe" id="inlineRadio3" value=3> 3'+
                 '</label>' +
                 '<label class="radio-inline">' +
-                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio4" value=4> 4'+
+                    '<input type="radio" name="Severe" id="inlineRadio4" value=4> 4'+
                 '</label>' +
                 '<label class="radio-inline">' +
-                    '<input type="radio" name="inlineRadioOptions" id="inlineRadio5" value=5> 5'+
+                    '<input type="radio" name="Severe" id="inlineRadio5" value=5> 5'+
                 '</label>' +
                 '<label class="col-sm-3 pull-right">Most</label>' +
               '</div>' +
-              '<div id="recaptcha_div"></div>' +
-              '</form>' +
-
-              '<script>' +
-              '$("#markerForm").submit(function(e) { ' +
-                  'var postData = {};'+
-                  'postData.Severe = $("input[name=inlineRadioOptions]:checked").val();' +
-                  'postData.Lat =  $("#Lat").val();' +
-                  'postData.Lng =  $("#Lng").val();' +
-                  'postData.recaptcha_challenge_field = $("#recaptcha_challenge_field").val();' +
-                  'postData.recaptcha_response_field = $("#recaptcha_response_field").val();' +
-                  '$.post('+
-                    '"nitro/nitro.php?action=saveMarker",'+
-                    'postData).done(function(data) {'+
-                       'if(data.errorcode != 0 || data.message != "Done") {'+
-                       'bootbox.dialog({message:data.message,'+
-                          'title:"Server Error",'+
-                          'buttons:{danger: { label: "Re-try",className: "btn-danger", callback: function() {'+
-                       '}}}}); '+
-                       '} else {'+
-                          'var marker = new google.maps.Marker({ '+
-                          'position: new google.maps.LatLng(postData.Lat, postData.Lng), '+
-                          'map: map }); '+
-                    '} });    '+
-              'e.preventDefault();'+
-              '});</script>' +
+              '<div class="form-group form-inline">' +
+                '<label class="col-sm-2">Picture:</label>' +
+                '<input type="file" name="dirtyPic" class="form-control" id="dirtyPic" accept="image/*">'+
               '</div>' +
-              '</div>';
+              '<div id="recaptcha_div"></div>' +
+              '</form>';
   bootbox.dialog({
      title: "Do you want to declare this place dirty ?",
      message: formDiv,
@@ -130,6 +108,42 @@ var formDiv = '<form class="form-horizontal" id="markerForm" action="nitro/nitro
          }
        }
     }});
+    $("#dirtyPic").fileinput({
+        showUpload: false,
+        previewFileType: "image",
+        browseClass: "btn btn-success",
+        browseLabel: "Select or Click Image",
+        browseIcon:  '<i class="glyphicon glyphicon-picture"></i>',
+        removeClass: "btn btn-danger",
+        removeLabel: "Delete",
+        removeIcon:  '<i class="glyphicon glyphicon-trash"></i>',
+    });
+    
+    $("form#markerForm").submit(function(e) {
+        var postData = new FormData($(this)[0]);
+        $.ajax({
+            url:         "nitro/nitro.php?action=saveMarker",
+            type:        "POST",
+            data:        postData,
+            cache:       false,
+            contentType: false,
+            processData: false,
+            success:     function(data) {
+                if(data.errorcode != 0 || data.message != "Done") {
+                    bootbox.dialog({message:data.message,
+                        title:"Server Error",
+                        buttons:{danger: { label: "Re-try",className: "btn-danger", callback: function() {}}}
+                    });
+                } else {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(data.marker["Lat"], data.marker["Lng"]),
+                        map: map 
+                    });
+                }
+            }});
+            e.preventDefault();
+    });
+
   //map.panTo(position);*/
 }
 
