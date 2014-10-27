@@ -31,7 +31,7 @@ function initialize() {
 }
 
 function plotExistingMarkers() {
-    $.post("nitro/nitro.php?action=getMarker").done(function(data) {
+    $.post("nitro/nitro.php?action=getMarkers").done(function(data) {
     if(typeof data == "string") data = jQuery.parseJSON(data);
     if((data.errorcode != 0) || (data.message != "Done")) {
        bootbox.alert(emsg);
@@ -130,6 +130,7 @@ var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/
             processData: false,
             success:     function(data) {
                 if(data.errorcode != 0 || data.message != "Done") {
+                    if(typeof data == "string") data = jQuery.parseJSON(data);
                     bootbox.dialog({message:data.message,
                         title:"Server Error",
                         buttons:{danger: { label: "Re-try",className: "btn-danger", callback: function() {}}}
