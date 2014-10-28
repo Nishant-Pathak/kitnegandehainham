@@ -29,10 +29,60 @@ class nitro{
          case "getImage":
             $this->getImage();
          break;
+         case "login":
+            $this->login();
+         break;
+         case "verify":
+            $this->verify();
+         break;
          default:
          break;
       }
       $this->send_response();
+   }
+   private function verify() {
+      include_once("../includes/dbinit.php");
+      $Lat = mysqli_real_escape_string($conn, $_POST["Lat"]);
+      $Lng = mysqli_real_escape_string($conn, $_POST["Lng"]);
+      $vd  = mysqli_real_escape_string($conn, $_POST["vd"]);
+      $query = "SELECT * FROM marker_tbl WHERE Lat=".$Lat." AND Lng=".$Lng;
+      $result = mysqli_query($conn, $query);
+      
+      if($result->num_rows == 0) {
+          $this->response->set_message("Given cordinate not found.");
+          $this->response->set_errorcode(-1);
+          return 0;
+      }
+      $row = $result->fetch_assoc();
+      if($row["verified"] !=0) {
+          $this->response->set_message("Already verified.");
+          $this->response->set_errorcode(-1);
+          return 0;
+      }
+      if($vd == 1) $query = "UPDATE marker_tbl SET verified=1 WHERE mid=".$row["mid"];
+      else $query = "DELETE FROM marker_tbl WHERE ".$row["mid"];
+      mysqli_query($conn, $query);
+      include_once("../includes/dbclose.php");
+      return 0;
+   }
+   
+   private function login() {
+      include_once("../includes/dbinit.php");
+      $uname = mysqli_real_escape_string($conn, $_POST["UserName"]);
+      $pass = mysqli_real_escape_string($conn, $_POST["Password"]);
+      $query = "SELECT * FROM user_tbl WHERE username='".$uname."' AND password='".$pass."'";
+      $result = mysqli_query($conn, $query);
+      include_once("../includes/dbclose.php");
+      if($result->num_rows == 0) {
+        $this->response->set_message("User not found.");
+        $this->response->set_errorcode(-1);
+        return 0;
+      }
+      $row = $result->fetch_assoc();
+      $_SESSION["user"] = $uname;
+      $_SESSION["authlevel"] = $row["authlevel"];
+      header("Location: /");
+      exit(0);
    }
    
    private function getImage() {
@@ -41,7 +91,11 @@ class nitro{
       $Lng = mysqli_real_escape_string($conn, $_GET["Lng"]);
       $query = "SELECT * FROM marker_tbl WHERE Lat=".$Lat." AND Lng=".$Lng;
       $result = mysqli_query($conn, $query);
+      include_once("../includes/dbclose.php");
+
       if($result->num_rows == 0) {
+          $this->response->set_message("Given cordinate not found.");
+          $this->response->set_errorcode(-1);
           return 0;
       }
       $row = $result->fetch_assoc();
@@ -53,6 +107,7 @@ class nitro{
                 '<img style="max-width:100%" src= '.$img.'></img>'.
                 '<pre>Severity:'.$row["Severe"].'</pre></div>';
       $this->response->add_response("imgdiv", $imgdiv);
+
    }
    
    private function getMarkers() {
