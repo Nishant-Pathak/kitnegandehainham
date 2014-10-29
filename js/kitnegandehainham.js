@@ -89,12 +89,22 @@ function placeMarker(position, map) {
                 '</label>' +
                 '<label class="col-sm-2 pull-right">Most</label>' +
               '</div>' +
-              '<div class="form-group form-inline">' +
-                '<label class="col-sm-4">Picture:</label>' +
-                '<input type="file" name="dirtyPic"  class="col-sm-2" id="dirtyPic" accept="image/*">'+
+              '<div class="form-group form-inline" id="SelectM">' +
+                '<label class="col-sm-4">Mode</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="SelectMode" value=1 checked>Click New Picture'+
+                '</label>' +
+                '<label class="radio-inline">' +
+                    '<input type="radio" name="SelectMode" value=2>Browse'+
+                '</label>' +
+                '</div>' +
+              '<div class="form-group form-inline" id="showCamera">' +
+                '<label class="col-sm-4">Picture</label>' +
+                '<input type="file" name="dirtyPic"  class="col-sm-2" id="dirtyPic" accept="image/*" capture="camera">'+
               '</div>' +
               '<div id="recaptcha_div"class="form-group"></div>' +
               '</form>';
+
   $('#recaptcha_area').addClass("pull-right");
   bootbox.dialog({
      title: "Do you want to declare this place dirty ?",
@@ -110,9 +120,19 @@ function placeMarker(position, map) {
          }
        }
     }});
+
+    $("#SelectM input[name='SelectMode']").click(function() {
+        if($('input:radio[name=SelectMode]:checked').val() == 1) {
+            $('#dirtyPic').attr("capture", "camera");
+        } else {
+            $('#dirtyPic').removeAttr("capture");
+        }
+    });
+
     $("#dirtyPic").fileinput({
         showUpload: false,
         previewFileType: "image",
+        allowedFileTypes: ["image"],
         browseClass: "btn btn-primary",
         browseLabel: "Select",
         browseIcon:  '<i class="glyphicon glyphicon-picture"></i>',
