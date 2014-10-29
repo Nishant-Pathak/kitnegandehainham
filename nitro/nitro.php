@@ -1,12 +1,9 @@
 <?php
-
+ob_start("ob_gzhandler");
 include_once("nitro_response.php");
-
 session_start();
 $request_uri = $_SERVER["REQUEST_URI"];
-
 $obj = new nitro();
-
 call_user_func_array(array($obj,"processReq"), array());
 
 class nitro{
@@ -148,7 +145,7 @@ class nitro{
        else if(count($_FILES) == 0) $emsg = "Image is mandatory.";
        else if(!isset($_FILES["dirtyPic"])) $emsg = "Unknown file.";
        else if(strpos($_FILES["dirtyPic"]["type"], "image/") != 0) $emsg = "Unknown file type";
-       else if($_FILES["dirtyPic"]["size"] > 5*1024*1025) $emsg = "Maximum upload size supported is 5MB";
+       else if($_FILES["dirtyPic"]["size"] > 8*1024*1025) $emsg = "Maximum upload size supported is 8MB";
        else if($_FILES["dirtyPic"]["error"] != 0) $emsg = "Error in upload.";
        else return false;
        $this->response->set_message($emsg);

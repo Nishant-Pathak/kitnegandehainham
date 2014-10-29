@@ -3,3 +3,11 @@
     margin: 0px;
     padding: 0px
 }
+
+#markerForm > div:nth-child(3) > span > div.input-group > div.form-control.file-caption.kv-fileinput-caption {
+    max-width: 100px;
+}
+
+#recaptcha_area {
+    float: right;
+}

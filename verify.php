@@ -1,8 +1,23 @@
 <?php
 include_once("includes/header.php");
 include_once("includes/navbar.php");
+include_once("includes/dbinit.php");
 
-if(!isset($_SESSION["user"])){
+if(isset($_GET["username"])) {
+      $uname = mysqli_real_escape_string($conn, $_GET["username"]);
+      $pass = mysqli_real_escape_string($conn, $_GET["password"]);
+      $query = "SELECT * FROM user_tbl WHERE username='".$uname."' AND password='".$pass."'";
+      $result = mysqli_query($conn, $query);
+
+      if($result->num_rows == 0) {
+        $this->response->set_message("User not found.");
+        $this->response->set_errorcode(-1);
+        exit(0);
+      }
+      $row = $result->fetch_assoc();
+      $_SESSION["user"] = $uname;
+      $_SESSION["authlevel"] = $row["authlevel"];
+} else if(!isset($_SESSION["user"])){
     header("Location: /");
     exit(0);
 }
@@ -14,12 +29,13 @@ if(!isset($_SESSION["user"])){
           <h1>Pending verification</h1>
         </div>
         <?php
-            include_once("includes/dbinit.php");
-            $query = "SELECT * FROM marker_tbl where 1";
+            $query = "SELECT * FROM marker_tbl WHERE 1";
+            //echo $query;
             $result = mysqli_query($conn, $query);
             $i =0;
+            //echo $result->fetch_assoc();
             echo '<div class="container-fluid"><div class="row">';
-            while ($row = $result->fetch_assoc()) {
+            while (($row = $result->fetch_assoc())!= NULL ) {
                 if($row["verified"] > 0) continue;
                 echo '<div class="modal-body col-md-3 ">'.
                     '<img style="max-width:100%" src= '.'uploads/'.$row["mid"].'></img>'.
@@ -31,7 +47,6 @@ if(!isset($_SESSION["user"])){
                 $i++;
             }
             echo "</div>";
-            include_once("includes/dbclose.php");
         ?>
       </div>
     </div>
@@ -53,6 +68,7 @@ if(!isset($_SESSION["user"])){
 
     </script>
 <?php
+include_once("includes/dbclose.php");
 
 include_once("includes/footer.php");
 ?>

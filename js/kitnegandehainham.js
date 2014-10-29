@@ -59,7 +59,8 @@ function placeMarker(position, map) {
       callback: Recaptcha.focus_response_field
     }
   );
-var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/form-data" method="POST"> ' +
+
+  var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/form-data" method="POST"> ' +
               '<div class="form-group form-inline">' +
                 '<label class="col-sm-4">Location Cordinates</label>' +
                 '<div class="form-group col-sm-4">' +
@@ -70,7 +71,7 @@ var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/
                 '</div>' +
               '</div>' +
               '<div class="form-group form-inline">' +
-              '<label class="col-sm-3">Less</label>' +
+              '<label class="col-sm-4">Less</label>' +
                 '<label class="radio-inline">' +
                     '<input type="radio" name="Severe" id="inlineRadio1" value=1> 1'+
                 '</label>' +
@@ -86,14 +87,15 @@ var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/
                 '<label class="radio-inline">' +
                     '<input type="radio" name="Severe" id="inlineRadio5" value=5> 5'+
                 '</label>' +
-                '<label class="col-sm-3 pull-right">Most</label>' +
+                '<label class="col-sm-2 pull-right">Most</label>' +
               '</div>' +
               '<div class="form-group form-inline">' +
-                '<label class="col-sm-2">Picture:</label>' +
-                '<input type="file" name="dirtyPic" class="form-control" id="dirtyPic" accept="image/*">'+
+                '<label class="col-sm-4">Picture:</label>' +
+                '<input type="file" name="dirtyPic"  class="col-sm-2" id="dirtyPic" accept="image/*">'+
               '</div>' +
-              '<div id="recaptcha_div"></div>' +
+              '<div id="recaptcha_div"class="form-group"></div>' +
               '</form>';
+  $('#recaptcha_area').addClass("pull-right");
   bootbox.dialog({
      title: "Do you want to declare this place dirty ?",
      message: formDiv,
@@ -111,8 +113,8 @@ var formDiv = '<form class="form-horizontal" id="markerForm" enctype="multipart/
     $("#dirtyPic").fileinput({
         showUpload: false,
         previewFileType: "image",
-        browseClass: "btn btn-success",
-        browseLabel: "Select or Click Image",
+        browseClass: "btn btn-primary",
+        browseLabel: "Select",
         browseIcon:  '<i class="glyphicon glyphicon-picture"></i>',
         removeClass: "btn btn-danger",
         removeLabel: "Delete",
