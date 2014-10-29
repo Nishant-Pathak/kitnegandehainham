@@ -88,7 +88,6 @@ function plotExistingMarkers() {
         });
         markers.push(marker);
         google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map);
             var p = this.getPosition();
             $.ajax({
                 url:         "nitro/nitro.php?action=getImage&Lat="+p.k+"&Lng="+p.B,
