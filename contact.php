@@ -6,7 +6,7 @@ include_once("includes/navbar.php");
       <!-- Begin page content -->
       <div class="container">
         <div class="page-header">
-          <h1>Contact us</h1>
+          <h2>Contact us</h2>
         </div>
       <address>
             <div class="container-fluid">

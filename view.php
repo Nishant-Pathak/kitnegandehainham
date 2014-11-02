@@ -6,8 +6,9 @@ include_once("includes/navbar.php");
       <!-- Begin page content -->
       <div class="container">
         <div class="page-header">
-          <h1>Current Status</h1>
+          <h2>How filthy we are</h2>
         </div>
+        <div><p class="lead">Zoom in to the red marks to view.</p></div>
         <div id="map-canvas"></div>
       </div>
     </div>

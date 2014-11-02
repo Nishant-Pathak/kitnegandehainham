@@ -8,7 +8,7 @@ var emsg = "Something went wrong: ";
 function initialize() {
     geocoder = new google.maps.Geocoder();
     var mapOptions = {
-        zoom: 4
+        zoom: 5
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 

@@ -57,7 +57,10 @@ class nitro{
           return 0;
       }
       if($vd == 1) $query = "UPDATE marker_tbl SET verified=1 WHERE mid=".$row["mid"];
-      else $query = "DELETE FROM marker_tbl WHERE ".$row["mid"];
+      else {
+      //  delete("../uploads/".$row["mid"]);
+        $query = "DELETE FROM marker_tbl WHERE mid=".$row["mid"];
+      }
       mysqli_query($conn, $query);
       include_once("../includes/dbclose.php");
       return 0;

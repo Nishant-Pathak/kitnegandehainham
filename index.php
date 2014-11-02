@@ -12,8 +12,11 @@ include_once("includes/navbar.php");
       <!-- Begin page content -->
       <div class="container">
         <div class="page-header">
-          <h1>Let's find how dirty we are...</h1>
-          <p>Mark and rate the place in your neighbour which you find dirty.</p>
+          <blockquote class="blockquote-reverse">
+            <p>Many faces ... One voice ... One solution ...</p>
+            <footer>&#8212; Swachh Bharat Abhiyan</footer>
+          </blockquote>
+          <p>Mark and rate the place in your neighbour which you find filthy. Allow access to your device location to start. You can view previously marked location in view tab.</p>
         </div>
         <div id="map-canvas"></div>
       </div>
