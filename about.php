@@ -3,6 +3,8 @@ include_once("includes/header.php");
 include_once("includes/navbar.php");
 
 ?>
+      <!-- Go to www.addthis.com/dashboard to customize your tools -->
+      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5203f34c20d9f163" async="async"></script>
       <!-- Begin page content -->
       <div class="container">
         <div class="page-header">
@@ -13,15 +15,17 @@ include_once("includes/navbar.php");
 Often they feel to be alone in this motive and hence they are unable to initiate steps towards cleanliness of India. Let's fight this issue
 together. If you see any filthy place around you, just post a pic on this website, and we will fight together and raise our voices to get the place cleaned. We will collectively put efforts and notify the concerned authorities to resolve the issue and bring drastic change in the society.
         </p>
-        <div>
-        <ul>Usage:
-        <li>Go to Home Page of kitnegandehainham.</li>
-        <li>Press right or double click on the map to select a location.</li>
-        <li>Take a picture of the scene.</li>
-        <li>Rate the place on the scale of 5, for 1 as less dirty place and 5 as most.</li>
-        <li>Save the location.</li>
+        <div class="lead">
+        <ul>How you can bring the change:
+            <li>Go to Home page of kitnegandehainham.</li>
+            <li>Right click or double click on the map to select a location.</li>
+            <li>Rate the place on the scale of 5, for 1 as less dirty place and 5 as most.</li>
+            <li>Select a picture of the scene you feel as filthy.</li>
+            <li>Enter the verification code and save.</li>
+            <li>Cheers !! Thanks for being a part of the cause.</li>
         </ul>
       </div>
+      <div class="addthis_native_toolbox"><p class="lead">Spread the words:</p></div>
     </div>
 
 <?php

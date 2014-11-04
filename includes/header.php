@@ -15,10 +15,13 @@
     <!-- Custom styles for this template -->
     <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
     <link href="../css/kitnegandehainham.css" rel="stylesheet">
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <?php
+        $path = substr($_SERVER['REQUEST_URI'],1);
+        if($path == "about.php") echo '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5203f34c20d9f163" async="async"></script>';
+    ?>
   </head>
 
   <body>
-
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <!-- Wrap all page content here -->
     <div id="wrap">

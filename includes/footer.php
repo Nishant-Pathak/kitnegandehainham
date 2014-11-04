@@ -4,7 +4,7 @@
 
     <div id="footer">
       <div class="container">
-        <p class="text-muted credit"> KitneGandeHainHum © 2014<a href="/">.</p>
+        <p class="text-muted credit"> KitneGandeHainHum © 2014.</p>
       </div>
     </div>
 
