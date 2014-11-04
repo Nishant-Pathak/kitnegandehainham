@@ -25,7 +25,7 @@ together. If you see any filthy place around you, just post a pic on this websit
             <li>Cheers !! Thanks for being a part of the cause.</li>
         </ul>
       </div>
-      <div class="addthis_native_toolbox"><p class="lead">Spread the words:</p></div>
+      <div class="addthis_native_toolbox"><p class="lead">Spread the words</p></div>
     </div>
 
 <?php
