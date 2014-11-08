@@ -106,7 +106,7 @@ function placeMarker(position, map) {
     $('#markerForm')[0].reset();
     $('#formdiv').css("display","block");
     $('.progress').css("display","none");
-
+    $('.modal-header').removeClass("alert-warning");
     $('#myModalLabel').text("Do you want to declare this place dirty ?");
     $('#Lat').val(position.k);
     $('#Lng').val(position.B);
@@ -161,8 +161,7 @@ function placeMarker(position, map) {
                 xhr.upload.onprogress = function(e) {
                     if (e.lengthComputable) {
                         var uploaded = Math.round((e.loaded / e.total) * 10000)/100 + '%';
-                        $('.progress-bar').text(uploaded);
-                        $('.progress-bar').css("width", uploaded);
+                        updateProgressBar(uploaded);
                     }
                 };
                 xhr.upload.onload = function() {
@@ -180,25 +179,34 @@ function placeMarker(position, map) {
                         $('#savebtn').addClass("btn-danger").removeClass("btn-success");
                         $('.progress').css("display","none");
                         Recaptcha.reload();
+                        $('.modal-header').addClass("alert-warning");
                 } else {
                     showAlert("You are done!! Have a look in view tab or mark another location.", false);
                     $('#myModal').modal('hide');
-                    $('.progress-bar').css("width", "0%");
+                    $('.modal-header').removeClass("alert-warning");
                     reinitlize();
                     var c = new google.maps.LatLng(data.marker.Lat, data.marker.Lng);
                     alreadyMarked.center = c;
                     new google.maps.Circle(alreadyMarked);
                 }
+                updateProgressBar("0%");
                 alreadyClicked = true;
             },
             failure: function(data) {
                 showAlert("Something went wrong, Please try again later", true);
+                updateProgressBar("0%");
                 reinitlize();
             }});
     });
 
   //map.panTo(position);*/
 }
+
+function updateProgressBar(uploaded) {
+    $('.progress-bar').text(uploaded);
+    $('.progress-bar').css("width", uploaded);
+}
+
 function showAlert(msg, asError) {
     if(asError) {
         $('.alert').addClass("alert-danger").removeClass("alert-success");
