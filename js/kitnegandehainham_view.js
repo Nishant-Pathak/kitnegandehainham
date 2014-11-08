@@ -4,6 +4,7 @@ var markers = [];
 var markercount = 0;
 var circles = [];
 var switching = true;
+var openingpopup = true;
 var emsg = "Something went wrong: ";
 function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -88,6 +89,8 @@ function plotExistingMarkers() {
         });
         markers.push(marker);
         google.maps.event.addListener(marker, 'click', function() {
+            if(openingpopup) openingpopup = false;
+            else return;
             var p = this.getPosition();
             $.ajax({
                 url:         "nitro/nitro.php?action=getImage&Lat="+p.k+"&Lng="+p.B,
@@ -103,6 +106,10 @@ function plotExistingMarkers() {
                             }
                         }
                     });
+                    openingpopup = true;
+                },
+                failure: function(data) {
+                    openingpopup = true;                    
                 }
             });
         });

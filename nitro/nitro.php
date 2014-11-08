@@ -37,6 +37,7 @@ class nitro{
       }
       $this->send_response();
    }
+
    private function verify() {
       include_once("../includes/dbinit.php");
       $Lat = mysqli_real_escape_string($conn, $_POST["Lat"]);
@@ -127,6 +128,13 @@ class nitro{
    }
 
    private function verifyReCaptha() {
+      if(!isset($_POST["recaptcha_challenge_field"]) || !isset($_POST["recaptcha_response_field"])) {
+        $this->response->set_message("Missing reCAPTCHA");
+        $this->response->set_errorcode(-1);
+        return false;
+      }
+      $chal = $_POST["recaptcha_challenge_field"];
+      $crsp = $_POST["recaptcha_response_field"];
       require_once('../includes/recaptchalib.php');
       $privatekey = "6LeRZvwSAAAAALNr-n6o2-4h6_dYJihT86EjgpnA";
       $resp = recaptcha_check_answer ($privatekey,
@@ -135,7 +143,7 @@ class nitro{
                           $_POST["recaptcha_response_field"]);
 
       if (!$resp->is_valid) {
-        $this->response->set_message("The reCAPTCHA wasn't entered correctly. Go back and try it again. Error :". $resp->error);
+        $this->response->set_message("The reCAPTCHA wasn't entered correctly. Try it again. Error :". $resp->error);
         $this->response->set_errorcode(-1);
         return false;
       }
@@ -148,11 +156,11 @@ class nitro{
        else if(count($_FILES) == 0) $emsg = "Image is mandatory.";
        else if(!isset($_FILES["dirtyPic"])) $emsg = "Unknown file.";
        else if(strpos($_FILES["dirtyPic"]["type"], "image/") != 0) $emsg = "Unknown file type";
-       else if($_FILES["dirtyPic"]["size"] > 8*1024*1025) $emsg = "Maximum upload size supported is 8MB";
-       else if($_FILES["dirtyPic"]["error"] != 0) $emsg = "Error in upload.";
+       else if($_FILES["dirtyPic"]["size"] > 8*1024*1024) $emsg = "Maximum upload size supported is 8MB";
+       else if($_FILES["dirtyPic"]["error"] != 0) $emsg = "Error in upload (Don't forget to attach image).";
        else return false;
        $this->response->set_message($emsg);
-       $this->response->set_errorcode(-1);
+       $this->response->set_errorcode($_FILES["dirtyPic"]["error"]);
        return true;
    }
    
