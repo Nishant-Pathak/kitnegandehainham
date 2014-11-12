@@ -13,7 +13,7 @@ include_once("includes/navbar.php");
       </div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script type="text/javascript" src="../js/kitnegandehainham_view.js"></script>
+    <script type="text/javascript" src="../js/kitnegandehainham_view.min.js"></script>
 <?php
 
 include_once("includes/footer.php");
