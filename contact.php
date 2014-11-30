@@ -20,6 +20,17 @@ include_once("includes/navbar.php");
                 </div>
             </div>
             </div>
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                <img src="http://www.gravatar.com/avatar/add2441a674a470560293067d886c65c.png" class="img-circle">
+                </div>
+                <div><br />
+                <strong>Alka Soun</strong><br>
+                <a href="mailto:#">alkasoun.3@gmail.com</a>
+                </div>
+            </div>
+            </div>
         </address>
         <p class="lead">
         Please provide your valuable suggestions. Find <a target="_blank" href="https://github.com/Nishant-Pathak/kitnegandehainham">
