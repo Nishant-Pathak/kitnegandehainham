@@ -18,9 +18,9 @@
               Logged in as <a href="#" class="navbar-link"><?php echo isset($_SESSION["user"])? $_SESSION["user"]: "Guest"; ?></a>
             </p>
             <ul class="nav navbar-nav">
-              <li <?php if($path == "") echo "class='active'"; ?> ><a href="/">Home</a></li>
+              <li <?php if($path == "home.php") echo "class='active'"; ?> ><a href="/home.php">Home</a></li>
+              <li <?php if($path == "plot.php") echo "class='active'"; ?> ><a href="/">Plot</a></li>
               <li <?php if($path == "view.php") echo "class='active'"; ?> ><a href="/view.php">View</a></li>
-              <li <?php if($path == "about.php") echo "class='active'"; ?> ><a href="/about.php">About</a></li>
               <li <?php if($path == "contact.php") echo "class='active'"; ?> ><a href="/contact.php">Contact</a></li>
               <?php if(isset($_SESSION["user"])) { ?>
               <li <?php if($path == "verify.php") echo "class='active'"; ?> ><a href="/verify.php">Verify</a></li>

@@ -9,7 +9,7 @@ include_once("includes/navbar.php");
       <div class="container">
         <div class="page-header">
           <!--h3>In spite of all the cleaning event going on, let's find how dirty we are at this stage.</h3-->
-          <h2>Let's bring a change</h2>
+          <h2>About</h2>
         </div>
         <p  class="lead">This website provides a platform for those patriotic and passionate people of India who wants to make a difference by bringing positive change.
 Often they feel to be alone in this motive and hence they are unable to initiate steps towards cleanliness of India. Let's fight this issue
@@ -17,12 +17,13 @@ together. If you see any filthy place around you, just post a pic on this websit
         </p>
         <div class="lead">
         <ul>How you can bring the change:
-            <li>Go to Home page of kitnegandehainham.</li>
-            <li>Right click or double click on the map to select a location.</li>
+            <li>Go to Plot tab, Place the marker or allow access to device location to automatically place the marker.</li>
+            <li>Click on the marker to mark that place.</li>
             <li>Rate the place on the scale of 5, for 1 as less dirty place and 5 as most.</li>
             <li>Select a picture of the scene you feel as filthy.</li>
             <li>Enter the verification code and save.</li>
-            <li>Cheers !! Thanks for being a part of the cause.</li>
+            <li>Cheers !! You can view that location in view tab.</li>
+            <li>Thanks for being a part of the cause.</li>
         </ul>
       </div>
       <div class="addthis_native_toolbox"><p class="lead">Spread the words</p></div>

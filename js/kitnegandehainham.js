@@ -13,21 +13,23 @@ var alreadyMarked = {
     strokeOpacity: 1,
 };
 
+function updateMapMarker(positionToPlot, zoomlevel) {
+      map.setCenter(positionToPlot);
+      map.setZoom(zoomlevel);
+      markerToPlot.setPosition(positionToPlot);
+      markerToPlot.setAnimation(google.maps.Animation.BOUNCE);
+}
+
 function reinitlize() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       positionToPlot = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
-
-      map.setCenter(positionToPlot);
-      markerToPlot.setPosition(positionToPlot);
-      markerToPlot.setAnimation(google.maps.Animation.BOUNCE);
+      updateMapMarker(positionToPlot,17);
     }, function() {
     showAlert("Give access to your device location.", true);
     positionToPlot = new google.maps.LatLng(21.1289956, 82.7792201);
-    map.setCenter(positionToPlot);
-    markerToPlot.setPosition(positionToPlot);
-    markerToPlot.setAnimation(google.maps.Animation.BOUNCE);
+    updateMapMarker(positionToPlot,4);
     });
   } else {
     showAlert("Your browser does not support Geolocation.",true);
