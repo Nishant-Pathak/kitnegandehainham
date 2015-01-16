@@ -111,7 +111,7 @@ function placeMarker(position, map) {
     $('.modal-header').removeClass("alert-warning");
     $('#myModalLabel').text("Do you want to declare this place dirty ?");
     $('#Lat').val(position.k);
-    $('#Lng').val(position.B);
+    $('#Lng').val(position.D);
     $('#savebtn').addClass("btn-success");
     $('#savebtn').text("Save");
     $('#myModal').modal('show');

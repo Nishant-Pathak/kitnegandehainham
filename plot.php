@@ -6,8 +6,15 @@ include_once("includes/navbar.php");
     <link href="./css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <script src="./js/fileinput.min.js" type="text/javascript" ></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script type="text/javascript" src="../js/kitnegandehainham.min.js"></script>
-        <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js" ></script>
+    <?php
+        echo print_r($_GET,true);
+        if(isset($_GET["debugJs"]) and $_GET["debugJs"] == true) {
+            echo '<script type="text/javascript" src="../js/kitnegandehainham.js"></script>';
+        } else {
+            echo '<script type="text/javascript" src="../js/kitnegandehainham.min.js"></script>';
+        }
+    ?>
+    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js" ></script>
 
       <!-- Begin page content -->
       <div class="container">
