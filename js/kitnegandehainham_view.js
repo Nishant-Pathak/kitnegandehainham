@@ -93,7 +93,7 @@ function plotExistingMarkers() {
             else return;
             var p = this.getPosition();
             $.ajax({
-                url:         "nitro/nitro.php?action=getImage&Lat="+p.k+"&Lng="+p.D,
+                url:         "nitro/nitro.php?action=getImage&Lat="+p.lat()+"&Lng="+p.lng(),
                 type:        "POST",
                 success:     function(data) {
                     if(typeof data == "string") data = jQuery.parseJSON(data);

@@ -110,8 +110,8 @@ function placeMarker(position, map) {
     $('.progress').css("display","none");
     $('.modal-header').removeClass("alert-warning");
     $('#myModalLabel').text("Do you want to declare this place dirty ?");
-    $('#Lat').val(position.k);
-    $('#Lng').val(position.D);
+    $('#Lat').val(position.lat());
+    $('#Lng').val(position.lng());
     $('#savebtn').addClass("btn-success");
     $('#savebtn').text("Save");
     $('#myModal').modal('show');
